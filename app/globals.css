@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fff8ed;
+  --foreground: #1f1a14;
+  --muted: #9b6a37;
+  --card: rgba(255, 255, 255, 0.72);
+  --card-border: rgba(122, 84, 45, 0.16);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #120f0b;
+    --foreground: #fff3de;
+    --muted: #d6a15b;
+    --card: rgba(30, 24, 17, 0.76);
+    --card-border: rgba(255, 231, 195, 0.14);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family:
+    "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body::before {
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  content: "";
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 190, 109, 0.4), transparent 32%),
+    radial-gradient(circle at 80% 70%, rgba(117, 167, 255, 0.28), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.62), transparent 48%);
+  filter: blur(2px);
+}
+
+.site-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 32px;
+}
+
+.hero-card {
+  width: min(760px, 100%);
+  padding: clamp(42px, 8vw, 92px) clamp(28px, 7vw, 84px);
+  text-align: center;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 36px;
+  box-shadow: 0 28px 90px rgba(82, 51, 20, 0.18);
+  backdrop-filter: blur(20px);
+}
+
+.eyebrow {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: clamp(0.78rem, 2vw, 0.92rem);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.6rem, 11vw, 7.5rem);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.08em;
+}
+
+@media (max-width: 560px) {
+  .site-shell {
+    padding: 18px;
+  }
+
+  .hero-card {
+    border-radius: 28px;
+  }
+}
