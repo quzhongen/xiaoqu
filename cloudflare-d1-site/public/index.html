@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>qze的第一个网站 - 每日任务</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #edf3ff;
+        --card: rgba(255, 255, 255, 0.84);
+        --text: #172033;
+        --muted: #667085;
+        --line: rgba(44, 68, 118, 0.14);
+        --brand: #3157ff;
+        --brand-2: #758bff;
+        --danger: #ef4444;
+        --ok: #16a34a;
+        --warn: #f59e0b;
+        --shadow: 0 26px 70px rgba(49, 87, 255, 0.16);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC",
+          sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(49, 87, 255, 0.22), transparent 34rem),
+          radial-gradient(circle at right 25%, rgba(117, 139, 255, 0.24), transparent 28rem),
+          linear-gradient(135deg, #f7f9ff 0%, var(--bg) 100%);
+      }
+
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+
+      button {
+        border: 0;
+        cursor: pointer;
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+      }
+
+      .app {
+        width: min(1060px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 48px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 44px;
+      }
+
+      .site-title {
+        margin: 0;
+        color: var(--brand);
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+      }
+
+      .cloud-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 9px 13px;
+        background: rgba(255, 255, 255, 0.7);
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+        gap: 22px;
+        align-items: stretch;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: var(--card);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(18px);
+      }
+
+      .intro {
+        padding: 34px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        color: var(--brand);
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      h2 {
+        margin: 0 0 12px;
+        font-size: clamp(42px, 8vw, 86px);
+        line-height: 0.96;
+        letter-spacing: -0.07em;
+      }
+
+      .intro p {
+        margin: 0;
+        max-width: 620px;
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.8;
+      }
+
+      .auth-card,
+      .composer {
+        padding: 26px;
+      }
+
+      .auth-card h3,
+      .composer h3 {
+        margin: 0 0 10px;
+        font-size: 22px;
+      }
+
+      .auth-card p,
+      .helper {
+        margin: 0 0 18px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .field {
+        display: grid;
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+
+      .field span {
+        color: #344054;
+        font-size: 14px;
+        font-weight: 750;
+      }
+
+      input {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 14px 15px;
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--text);
+        outline: none;
+        transition: border-color 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      input:focus {
+        border-color: rgba(49, 87, 255, 0.58);
+        box-shadow: 0 0 0 4px rgba(49, 87, 255, 0.12);
+      }
+
+      .primary-btn {
+        width: 100%;
+        border-radius: 16px;
+        padding: 14px 18px;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        color: white;
+        font-weight: 850;
+        box-shadow: 0 12px 30px rgba(49, 87, 255, 0.22);
+      }
+
+      .secondary-btn {
+        border-radius: 999px;
+        padding: 10px 14px;
+        background: white;
+        color: var(--brand);
+        font-weight: 800;
+        border: 1px solid rgba(49, 87, 255, 0.2);
+      }
+
+      .danger-btn {
+        border-radius: 999px;
+        padding: 9px 12px;
+        background: #fff1f2;
+        color: var(--danger);
+        font-weight: 800;
+      }
+
+      .message {
+        min-height: 24px;
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .message.is-error {
+        color: var(--danger);
+      }
+
+      .message.is-ok {
+        color: var(--ok);
+      }
+
+      .workspace {
+        margin-top: 22px;
+      }
+
+      .todo-layout {
+        display: grid;
+        grid-template-columns: 360px 1fr;
+        gap: 22px;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .stat {
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 16px;
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .stat strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 26px;
+      }
+
+      .stat span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+
+      .filter-btn,
+      .status-btn {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 9px 12px;
+        background: rgba(255, 255, 255, 0.74);
+        color: var(--muted);
+        font-weight: 750;
+      }
+
+      .filter-btn.is-active,
+      .status-btn.is-active {
+        border-color: rgba(49, 87, 255, 0.42);
+        background: rgba(49, 87, 255, 0.1);
+        color: var(--brand);
+      }
+
+      .list-panel {
+        padding: 22px;
+      }
+
+      .list-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+
+      .list-head h3 {
+        margin: 0;
+        font-size: 22px;
+      }
+
+      .task-list {
+        display: grid;
+        gap: 14px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .task-card {
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        padding: 18px;
+        background: rgba(255, 255, 255, 0.82);
+      }
+
+      .task-card.is-completed {
+        background: rgba(240, 253, 244, 0.86);
+      }
+
+      .task-card.is-failed {
+        background: rgba(255, 241, 242, 0.9);
+      }
+
+      .task-main {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .task-title {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.45;
+      }
+
+      .status-pill {
+        flex: none;
+        border-radius: 999px;
+        padding: 7px 10px;
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .status-not_started {
+        background: #eef2ff;
+        color: #3157ff;
+      }
+
+      .status-in_progress {
+        background: #fffbeb;
+        color: #b45309;
+      }
+
+      .status-completed {
+        background: #dcfce7;
+        color: #15803d;
+      }
+
+      .status-failed {
+        background: #ffe4e6;
+        color: #be123c;
+      }
+
+      .time-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin: 0 0 12px;
+      }
+
+      .time-grid div {
+        border-radius: 16px;
+        padding: 12px;
+        background: rgba(247, 249, 255, 0.86);
+      }
+
+      dt {
+        margin-bottom: 5px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      dd {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 780;
+      }
+
+      .countdown {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+      }
+
+      .empty {
+        border: 1px dashed rgba(49, 87, 255, 0.25);
+        border-radius: 22px;
+        padding: 30px;
+        text-align: center;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.54);
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      @media (max-width: 880px) {
+        .hero,
+        .todo-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 560px) {
+        .app {
+          width: min(100% - 20px, 1060px);
+          padding-top: 18px;
+        }
+
+        .intro,
+        .auth-card,
+        .composer,
+        .list-panel {
+          padding: 20px;
+          border-radius: 22px;
+        }
+
+        .time-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <h1 class="site-title">qze的第一个网站</h1>
+        <div class="cloud-pill">☁️ D1 云端同步版</div>
+      </header>
+
+      <section class="hero">
+        <div class="intro panel">
+          <div class="eyebrow">Cloudflare D1 Todo List</div>
+          <h2>每日任务</h2>
+          <p>
+            任务会保存到 Cloudflare D1 云数据库。换电脑后打开同一个网址，输入同一个云端口令，就能继续看到你的任务。
+          </p>
+        </div>
+
+        <section class="auth-card panel" id="authCard">
+          <h3>进入你的云端任务本</h3>
+          <p>请输入你在 Cloudflare 后台设置的 TODO_ACCESS_KEY。口令只保存在当前浏览器，不会显示在页面上。</p>
+          <label class="field">
+            <span>云端口令</span>
+            <input id="accessKeyInput" type="password" autocomplete="current-password" placeholder="输入你的云端口令" />
+          </label>
+          <button class="primary-btn" id="saveKeyBtn">进入任务本</button>
+          <div class="message" id="authMessage"></div>
+        </section>
+      </section>
+
+      <section class="workspace" id="todoApp" hidden>
+        <div class="stats" aria-label="任务统计">
+          <div class="stat"><strong id="countNotStarted">0</strong><span>未开始</span></div>
+          <div class="stat"><strong id="countInProgress">0</strong><span>进行中</span></div>
+          <div class="stat"><strong id="countCompleted">0</strong><span>已完成</span></div>
+          <div class="stat"><strong id="countFailed">0</strong><span>未完成</span></div>
+        </div>
+
+        <div class="todo-layout">
+          <form class="composer panel" id="taskForm">
+            <h3>添加每日任务</h3>
+            <p class="helper">新增任务默认是“未开始”。到了结束时间还没完成，会自动变成“未完成”。</p>
+            <label class="field">
+              <span>任务内容</span>
+              <input id="taskTitleInput" maxlength="120" placeholder="例如：晚上 8 点前学习 30 分钟 HTML" required />
+            </label>
+            <label class="field">
+              <span>结束时间</span>
+              <input id="deadlineInput" type="datetime-local" required />
+            </label>
+            <button class="primary-btn" type="submit">添加任务</button>
+            <div class="message" id="formMessage"></div>
+          </form>
+
+          <section class="list-panel panel">
+            <div class="list-head">
+              <h3>任务列表</h3>
+              <div class="actions">
+                <button class="secondary-btn" id="refreshBtn" type="button">刷新云端数据</button>
+                <button class="secondary-btn" id="logoutBtn" type="button">换口令</button>
+              </div>
+            </div>
+
+            <div class="filters" id="filters">
+              <button class="filter-btn is-active" type="button" data-filter="all">全部</button>
+              <button class="filter-btn" type="button" data-filter="not_started">未开始</button>
+              <button class="filter-btn" type="button" data-filter="in_progress">进行中</button>
+              <button class="filter-btn" type="button" data-filter="completed">已完成</button>
+              <button class="filter-btn" type="button" data-filter="failed">未完成</button>
+            </div>
+
+            <ul class="task-list" id="taskList"></ul>
+            <div class="empty" id="emptyState" hidden>现在还没有任务，先添加一个每日任务吧。</div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const storageKey = "qzefirst-cloud-access-key";
+      const statusLabels = {
+        not_started: "未开始",
+        in_progress: "进行中",
+        completed: "已完成",
+        failed: "未完成",
+      };
+
+      const authCard = document.querySelector("#authCard");
+      const todoApp = document.querySelector("#todoApp");
+      const accessKeyInput = document.querySelector("#accessKeyInput");
+      const saveKeyBtn = document.querySelector("#saveKeyBtn");
+      const authMessage = document.querySelector("#authMessage");
+      const taskForm = document.querySelector("#taskForm");
+      const taskTitleInput = document.querySelector("#taskTitleInput");
+      const deadlineInput = document.querySelector("#deadlineInput");
+      const formMessage = document.querySelector("#formMessage");
+      const taskList = document.querySelector("#taskList");
+      const emptyState = document.querySelector("#emptyState");
+      const refreshBtn = document.querySelector("#refreshBtn");
+      const logoutBtn = document.querySelector("#logoutBtn");
+      const filters = document.querySelector("#filters");
+
+      let accessKey = localStorage.getItem(storageKey) || "";
+      let tasks = [];
+      let activeFilter = "all";
+
+      function setMessage(element, text, type = "") {
+        element.textContent = text;
+        element.className = `message ${type ? `is-${type}` : ""}`.trim();
+      }
+
+      function toDateTimeLocalValue(value) {
+        const date = value instanceof Date ? value : new Date(value);
+        const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+        return local.toISOString().slice(0, 16);
+      }
+
+      function formatDate(value) {
+        return new Intl.DateTimeFormat("zh-CN", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        }).format(new Date(value));
+      }
+
+      function formatDistance(deadlineAt, status) {
+        if (status === "completed") return "任务已完成";
+
+        const diff = new Date(deadlineAt).getTime() - Date.now();
+        if (diff <= 0) return "已到结束时间，任务未完成";
+
+        const totalMinutes = Math.ceil(diff / 60000);
+        const days = Math.floor(totalMinutes / 1440);
+        const hours = Math.floor((totalMinutes % 1440) / 60);
+        const minutes = totalMinutes % 60;
+
+        if (days > 0) return `距离结束还有 ${days} 天 ${hours} 小时`;
+        if (hours > 0) return `距离结束还有 ${hours} 小时 ${minutes} 分钟`;
+        return `距离结束还有 ${minutes} 分钟`;
+      }
+
+      async function apiFetch(url, options = {}) {
+        const response = await fetch(url, {
+          ...options,
+          headers: {
+            Authorization: `Bearer ${accessKey}`,
+            "Content-Type": "application/json",
+            ...(options.headers || {}),
+          },
+        });
+
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          throw new Error(data.error || "请求失败，请稍后重试。");
+        }
+        return data;
+      }
+
+      async function loadTasks() {
+        setMessage(authMessage, "正在读取云端任务……");
+        const data = await apiFetch("/api/tasks");
+        tasks = data.tasks || [];
+        renderTasks();
+        setMessage(authMessage, "云端任务读取成功。", "ok");
+      }
+
+      async function createTask(title, deadlineAt) {
+        const data = await apiFetch("/api/tasks", {
+          method: "POST",
+          body: JSON.stringify({ title, deadlineAt }),
+        });
+        tasks = [data.task, ...tasks];
+        renderTasks();
+      }
+
+      async function patchTask(id, patch) {
+        const data = await apiFetch("/api/tasks", {
+          method: "PATCH",
+          body: JSON.stringify({ id, ...patch }),
+        });
+        tasks = tasks.map((task) => (task.id === id ? data.task : task));
+        renderTasks();
+      }
+
+      async function deleteTask(id) {
+        await apiFetch(`/api/tasks?id=${encodeURIComponent(id)}`, { method: "DELETE" });
+        tasks = tasks.filter((task) => task.id !== id);
+        renderTasks();
+      }
+
+      function syncLocalExpiredTasks() {
+        let changed = false;
+        const now = Date.now();
+        tasks = tasks.map((task) => {
+          if (task.status !== "completed" && new Date(task.deadlineAt).getTime() <= now && task.status !== "failed") {
+            changed = true;
+            return { ...task, status: "failed" };
+          }
+          return task;
+        });
+        if (changed) renderTasks();
+      }
+
+      function updateStats() {
+        const counts = tasks.reduce(
+          (result, task) => {
+            result[task.status] += 1;
+            return result;
+          },
+          { not_started: 0, in_progress: 0, completed: 0, failed: 0 }
+        );
+
+        document.querySelector("#countNotStarted").textContent = counts.not_started;
+        document.querySelector("#countInProgress").textContent = counts.in_progress;
+        document.querySelector("#countCompleted").textContent = counts.completed;
+        document.querySelector("#countFailed").textContent = counts.failed;
+      }
+
+      function renderTasks() {
+        updateStats();
+
+        const visibleTasks = tasks
+          .filter((task) => activeFilter === "all" || task.status === activeFilter)
+          .sort((a, b) => new Date(a.deadlineAt) - new Date(b.deadlineAt));
+
+        taskList.innerHTML = "";
+        emptyState.hidden = visibleTasks.length > 0;
+
+        for (const task of visibleTasks) {
+          const item = document.createElement("li");
+          item.className = `task-card is-${task.status}`;
+          item.innerHTML = `
+            <div class="task-main">
+              <h4 class="task-title"></h4>
+              <span class="status-pill status-${task.status}">${statusLabels[task.status]}</span>
+            </div>
+            <dl class="time-grid">
+              <div>
+                <dt>开始时间</dt>
+                <dd>${formatDate(task.createdAt)}</dd>
+              </div>
+              <div>
+                <dt>结束时间</dt>
+                <dd>${formatDate(task.deadlineAt)}</dd>
+              </div>
+            </dl>
+            <p class="countdown">${formatDistance(task.deadlineAt, task.status)}</p>
+            <div class="actions">
+              <button class="status-btn ${task.status === "not_started" ? "is-active" : ""}" type="button" data-action="status" data-status="not_started">未开始</button>
+              <button class="status-btn ${task.status === "in_progress" ? "is-active" : ""}" type="button" data-action="status" data-status="in_progress">进行中</button>
+              <button class="status-btn ${task.status === "completed" ? "is-active" : ""}" type="button" data-action="status" data-status="completed">已完成</button>
+              <button class="secondary-btn" type="button" data-action="deadline" ${task.deadlineEdited ? "disabled" : ""}>${task.deadlineEdited ? "已修改过时间" : "修改结束时间"}</button>
+              <button class="danger-btn" type="button" data-action="delete">删除</button>
+            </div>
+          `;
+
+          item.querySelector(".task-title").textContent = task.title;
+          item.querySelectorAll("[data-action='status']").forEach((button) => {
+            button.disabled = task.status === "failed" || button.dataset.status === task.status;
+          });
+          item.querySelector("[data-action='deadline']").disabled = task.deadlineEdited || task.status === "completed";
+          item.querySelector("[data-action='delete']").addEventListener("click", async () => {
+            if (!confirm("确定删除这个任务吗？")) return;
+            try {
+              await deleteTask(task.id);
+              setMessage(formMessage, "任务已删除。", "ok");
+            } catch (error) {
+              setMessage(formMessage, error.message, "error");
+            }
+          });
+          item.querySelector("[data-action='deadline']").addEventListener("click", async () => {
+            const current = toDateTimeLocalValue(task.deadlineAt).replace("T", " ");
+            const input = prompt("请输入新的结束时间，格式：2026-08-04 18:30", current);
+            if (!input) return;
+
+            const normalized = input.trim().replace(/\s+/, "T");
+            const nextDate = new Date(normalized);
+            if (Number.isNaN(nextDate.getTime())) {
+              setMessage(formMessage, "时间格式不正确，请用：2026-08-04 18:30", "error");
+              return;
+            }
+
+            try {
+              await patchTask(task.id, { deadlineAt: nextDate.toISOString() });
+              setMessage(formMessage, "结束时间已修改，这个任务的修改机会已经用掉。", "ok");
+            } catch (error) {
+              setMessage(formMessage, error.message, "error");
+            }
+          });
+          item.querySelectorAll("[data-action='status']").forEach((button) => {
+            button.addEventListener("click", async () => {
+              try {
+                await patchTask(task.id, { status: button.dataset.status });
+                setMessage(formMessage, `任务已改为：${statusLabels[button.dataset.status]}`, "ok");
+              } catch (error) {
+                setMessage(formMessage, error.message, "error");
+              }
+            });
+          });
+
+          taskList.appendChild(item);
+        }
+      }
+
+      function setDefaultDeadline() {
+        const nextHour = new Date();
+        nextHour.setHours(nextHour.getHours() + 1, 0, 0, 0);
+        deadlineInput.min = toDateTimeLocalValue(new Date());
+        deadlineInput.value = toDateTimeLocalValue(nextHour);
+      }
+
+      saveKeyBtn.addEventListener("click", async () => {
+        const nextKey = accessKeyInput.value.trim();
+        if (!nextKey) {
+          setMessage(authMessage, "请先输入云端口令。", "error");
+          return;
+        }
+
+        try {
+          accessKey = nextKey;
+          await loadTasks();
+          localStorage.setItem(storageKey, accessKey);
+          authCard.hidden = true;
+          todoApp.hidden = false;
+        } catch (error) {
+          accessKey = "";
+          localStorage.removeItem(storageKey);
+          setMessage(authMessage, error.message, "error");
+        }
+      });
+
+      taskForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const title = taskTitleInput.value.trim();
+        const deadlineAt = new Date(deadlineInput.value).toISOString();
+
+        try {
+          await createTask(title, deadlineAt);
+          taskTitleInput.value = "";
+          setDefaultDeadline();
+          setMessage(formMessage, "任务已保存到云端。", "ok");
+        } catch (error) {
+          setMessage(formMessage, error.message, "error");
+        }
+      });
+
+      refreshBtn.addEventListener("click", async () => {
+        try {
+          await loadTasks();
+          setMessage(formMessage, "已经刷新云端数据。", "ok");
+        } catch (error) {
+          setMessage(formMessage, error.message, "error");
+        }
+      });
+
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem(storageKey);
+        accessKey = "";
+        tasks = [];
+        accessKeyInput.value = "";
+        todoApp.hidden = true;
+        authCard.hidden = false;
+        setMessage(authMessage, "你可以输入新的云端口令。");
+      });
+
+      filters.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-filter]");
+        if (!button) return;
+
+        activeFilter = button.dataset.filter;
+        filters.querySelectorAll(".filter-btn").forEach((item) => item.classList.remove("is-active"));
+        button.classList.add("is-active");
+        renderTasks();
+      });
+
+      setDefaultDeadline();
+      setInterval(syncLocalExpiredTasks, 1000);
+
+      if (accessKey) {
+        accessKeyInput.value = accessKey;
+        loadTasks()
+          .then(() => {
+            authCard.hidden = true;
+            todoApp.hidden = false;
+          })
+          .catch((error) => {
+            localStorage.removeItem(storageKey);
+            accessKey = "";
+            setMessage(authMessage, error.message, "error");
+          });
+      }
+    </script>
+  </body>
+</html>
+
