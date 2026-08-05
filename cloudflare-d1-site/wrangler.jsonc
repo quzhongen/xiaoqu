@@ -7,6 +7,12 @@
     "directory": "./public",
     "binding": "ASSETS",
     "run_worker_first": ["/api/*"]
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "qzefirst_todo",
+      "database_id": "eb8f7413-0c44-4d5a-892a-f00c7a55ef4c"
+    }
+  ]
 }
-
