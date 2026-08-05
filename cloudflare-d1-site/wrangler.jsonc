@@ -3,6 +3,7 @@
   "name": "qzefirst-cloud",
   "main": "./src/index.js",
   "compatibility_date": "2026-08-05",
+  "keep_vars": true,
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
