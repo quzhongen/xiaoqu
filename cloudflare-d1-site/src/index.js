@@ -38,7 +38,7 @@ async function getOwnerId(request, env) {
 function normalizeDate(value, fieldName) {
   const time = Date.parse(value);
   if (!Number.isFinite(time)) {
-    throw new Error(`${fieldName} 时间格式不正确。`);
+    throw new Error(`${fieldName}时间格式不正确。`);
   }
   return new Date(time).toISOString();
 }
@@ -232,8 +232,7 @@ async function deleteTask(request, db, ownerId) {
   return json({ ok: true });
 }
 
-export async function onRequest(context) {
-  const { request, env } = context;
+async function handleTasks(request, env) {
   const auth = await getOwnerId(request, env);
   if (auth.error) {
     return auth.error;
@@ -261,4 +260,16 @@ export async function onRequest(context) {
     return json({ error: error.message || "请求失败。" }, 400);
   }
 }
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+
+    if (url.pathname === "/api/tasks") {
+      return handleTasks(request, env);
+    }
+
+    return env.ASSETS.fetch(request);
+  },
+};
 

@@ -1,9 +1,0 @@
-name = "qzefirst"
-pages_build_output_dir = "./public"
-compatibility_date = "2026-08-04"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "qzefirst_todo"
-database_id = "把你的 Cloudflare D1 database_id 填在这里"
-

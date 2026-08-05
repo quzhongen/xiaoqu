@@ -5,15 +5,19 @@
 ## 文件说明
 
 - `public/index.html`：网站页面，包含 HTML、CSS、浏览器里的交互逻辑。
-- `functions/api/tasks.js`：云端接口，负责添加、读取、修改、删除任务，并连接 D1。
+- `src/index.js`：云端接口，负责添加、读取、修改、删除任务，并连接 D1。
 - `migrations/0001_create_tasks.sql`：数据库表结构，第一次创建 D1 表时执行。
-- `wrangler.toml.example`：用 Wrangler 命令部署时的配置模板。
+- `wrangler.jsonc`：Cloudflare Worker 部署配置。
 
 ## 重要提醒
 
-加了 Functions 之后，不能再只用 Cloudflare 后台的拖拽上传 zip。Cloudflare 官方说明：Pages Functions 需要通过 Git provider 或 Wrangler 命令部署。
+这版代码适配 Cloudflare 新版 Workers 构建页面。部署命令使用：
 
-## 推荐部署方式：GitHub + Cloudflare Pages
+```text
+cd cloudflare-d1-site && npx wrangler deploy
+```
+
+## 推荐部署方式：GitHub + Cloudflare Workers
 
 ### 1. 把这个目录提交到 GitHub
 
@@ -51,25 +55,34 @@ qzefirst_todo
 migrations/0001_create_tasks.sql
 ```
 
-### 4. 创建或连接 Pages 项目
+### 4. 创建或连接 Worker 项目
 
-如果新建 Pages 项目，建议这样填：
+如果新建 Worker 项目，建议这样填：
 
 ```text
-Framework preset: None
+Project name: qzefirst-cloud
 Build command: 留空
-Build output directory: public
-Root directory: cloudflare-d1-site
+Deployment command: cd cloudflare-d1-site && npx wrangler deploy
 ```
 
-如果你继续使用已有项目 `qzefirst`，需要确保它的部署来源改成 GitHub 或 Wrangler，因为 Direct Upload 不支持 Functions。
+如果你继续使用已有项目 `qzefirst-cloud`，进入：
+
+```text
+Setup → Build settings
+```
+
+把 Deployment command 改成：
+
+```text
+cd cloudflare-d1-site && npx wrangler deploy
+```
 
 ### 5. 绑定 D1
 
-进入你的 Pages 项目：
+进入你的 Worker 项目：
 
 ```text
-Settings → Bindings → Add → D1 database
+Binding → Add → D1 database
 ```
 
 填写：
@@ -83,10 +96,10 @@ D1 database: qzefirst_todo
 
 ### 6. 设置云端口令
 
-进入 Pages 项目的环境变量/密钥设置：
+进入 Worker 项目的环境变量/密钥设置：
 
 ```text
-Settings → Variables and Secrets
+Binding → Variables and Secrets
 ```
 
 新增一个变量或 Secret：
@@ -111,4 +124,3 @@ https://qzefirst.shop
 ```
 
 输入你设置的云端口令，就可以使用云端 Todo List。
-
