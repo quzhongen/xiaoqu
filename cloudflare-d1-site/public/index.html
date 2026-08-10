@@ -7,17 +7,33 @@
     <style>
       :root {
         color-scheme: light;
-        --bg: #edf3ff;
-        --card: rgba(255, 255, 255, 0.84);
-        --text: #172033;
-        --muted: #667085;
-        --line: rgba(44, 68, 118, 0.14);
-        --brand: #3157ff;
-        --brand-2: #758bff;
-        --danger: #ef4444;
-        --ok: #16a34a;
-        --warn: #f59e0b;
-        --shadow: 0 26px 70px rgba(49, 87, 255, 0.16);
+        --size-caption: 12px;
+        --size-control: 14px;
+        --size-body: 16px;
+        --size-card-title: 18px;
+        --size-panel-title: 20px;
+        --size-page-title: 24px;
+        --size-display: 28px;
+        --text-caption: var(--size-caption);
+        --text-control: var(--size-control);
+        --text-body: var(--size-body);
+        --text-card-title: var(--size-card-title);
+        --text-panel-title: var(--size-panel-title);
+        --text-page-title: var(--size-page-title);
+        --text-display: var(--size-display);
+        --bg: #f3f7f2;
+        --surface: rgba(255, 255, 255, 0.9);
+        --surface-strong: #ffffff;
+        --text: #18221d;
+        --muted: #66746b;
+        --line: rgba(38, 80, 52, 0.16);
+        --brand: #246b4b;
+        --brand-strong: #164733;
+        --accent: #f08a5d;
+        --danger: #c73e3a;
+        --ok: #1f8a55;
+        --warn: #b87914;
+        --shadow: 0 24px 70px rgba(36, 107, 75, 0.16);
       }
 
       * {
@@ -27,14 +43,12 @@
       body {
         margin: 0;
         min-height: 100vh;
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC",
-          sans-serif;
+        font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif;
         color: var(--text);
         background:
-          radial-gradient(circle at top left, rgba(49, 87, 255, 0.22), transparent 34rem),
-          radial-gradient(circle at right 25%, rgba(117, 139, 255, 0.24), transparent 28rem),
-          linear-gradient(135deg, #f7f9ff 0%, var(--bg) 100%);
+          linear-gradient(120deg, rgba(36, 107, 75, 0.12), transparent 34%),
+          linear-gradient(230deg, rgba(240, 138, 93, 0.16), transparent 38%),
+          var(--bg);
       }
 
       button,
@@ -50,13 +64,13 @@
 
       button:disabled {
         cursor: not-allowed;
-        opacity: 0.55;
+        opacity: 0.56;
       }
 
       .app {
-        width: min(1060px, calc(100% - 32px));
+        width: min(1120px, calc(100% - 32px));
         margin: 0 auto;
-        padding: 28px 0 48px;
+        padding: 24px 0 48px;
       }
 
       .topbar {
@@ -64,151 +78,172 @@
         align-items: center;
         justify-content: space-between;
         gap: 16px;
-        margin-bottom: 44px;
+        margin-bottom: 28px;
       }
 
       .site-title {
         margin: 0;
         color: var(--brand);
-        font-size: 15px;
+        font-size: var(--text-control);
         font-weight: 800;
-        letter-spacing: 0.03em;
       }
 
-      .cloud-pill {
-        display: inline-flex;
+      .userbar {
+        display: flex;
         align-items: center;
-        gap: 8px;
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        padding: 9px 13px;
-        background: rgba(255, 255, 255, 0.7);
+        gap: 10px;
         color: var(--muted);
-        font-size: 13px;
+        font-size: var(--text-control);
       }
 
-      .hero {
+      .shell {
         display: grid;
-        grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+        grid-template-columns: minmax(0, 0.9fr) minmax(340px, 1fr);
         gap: 22px;
-        align-items: stretch;
+        align-items: start;
       }
 
       .panel {
         border: 1px solid var(--line);
-        border-radius: 28px;
-        background: var(--card);
+        border-radius: 8px;
+        background: var(--surface);
         box-shadow: var(--shadow);
         backdrop-filter: blur(18px);
       }
 
       .intro {
-        padding: 34px;
+        padding: 30px;
       }
 
       .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
         margin-bottom: 12px;
-        color: var(--brand);
-        font-size: 14px;
+        color: var(--accent);
+        font-size: var(--text-control);
         font-weight: 800;
       }
 
       h2 {
-        margin: 0 0 12px;
-        font-size: clamp(42px, 8vw, 86px);
-        line-height: 0.96;
-        letter-spacing: -0.07em;
+        margin: 0 0 14px;
+        font-size: var(--text-display);
+        line-height: 1.3;
       }
 
-      .intro p {
+      .intro p,
+      .helper {
         margin: 0;
-        max-width: 620px;
         color: var(--muted);
-        font-size: 17px;
-        line-height: 1.8;
+        font-size: var(--text-body);
+        line-height: 1.65;
       }
 
       .auth-card,
-      .composer {
-        padding: 26px;
+      .composer,
+      .list-panel {
+        padding: 24px;
       }
 
       .auth-card h3,
-      .composer h3 {
-        margin: 0 0 10px;
-        font-size: 22px;
+      .composer h3,
+      .list-head h3 {
+        margin: 0 0 12px;
+        font-size: var(--text-panel-title);
+        line-height: 1.35;
       }
 
-      .auth-card p,
-      .helper {
-        margin: 0 0 18px;
+      .auth-tabs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 18px;
+      }
+
+      .tab-btn,
+      .filter-btn,
+      .status-btn {
+        min-height: 40px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.72);
         color: var(--muted);
-        line-height: 1.7;
+        font-size: var(--text-control);
+        font-weight: 750;
+        white-space: nowrap;
+      }
+
+      .tab-btn.is-active,
+      .filter-btn.is-active,
+      .status-btn.is-active {
+        border-color: rgba(36, 107, 75, 0.45);
+        background: rgba(36, 107, 75, 0.1);
+        color: var(--brand-strong);
       }
 
       .field {
         display: grid;
         gap: 8px;
-        margin-bottom: 15px;
+        margin-bottom: 14px;
       }
 
       .field span {
-        color: #344054;
-        font-size: 14px;
+        color: var(--brand-strong);
+        font-size: var(--text-control);
         font-weight: 750;
       }
 
       input {
         width: 100%;
+        min-height: 48px;
         border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 14px 15px;
-        background: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        padding: 13px 14px;
+        background: rgba(255, 255, 255, 0.94);
         color: var(--text);
+        font-size: var(--text-body);
         outline: none;
         transition: border-color 0.18s ease, box-shadow 0.18s ease;
       }
 
       input:focus {
-        border-color: rgba(49, 87, 255, 0.58);
-        box-shadow: 0 0 0 4px rgba(49, 87, 255, 0.12);
+        border-color: rgba(36, 107, 75, 0.58);
+        box-shadow: 0 0 0 4px rgba(36, 107, 75, 0.12);
+      }
+
+      .primary-btn,
+      .secondary-btn,
+      .danger-btn {
+        min-height: 42px;
+        border-radius: 8px;
+        padding: 11px 14px;
+        font-size: var(--text-control);
+        font-weight: 850;
+        white-space: nowrap;
       }
 
       .primary-btn {
         width: 100%;
-        border-radius: 16px;
-        padding: 14px 18px;
-        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        background: linear-gradient(135deg, var(--brand), var(--brand-strong));
         color: white;
-        font-weight: 850;
-        box-shadow: 0 12px 30px rgba(49, 87, 255, 0.22);
+        box-shadow: 0 12px 30px rgba(36, 107, 75, 0.22);
       }
 
       .secondary-btn {
-        border-radius: 999px;
-        padding: 10px 14px;
+        border: 1px solid rgba(36, 107, 75, 0.22);
         background: white;
         color: var(--brand);
-        font-weight: 800;
-        border: 1px solid rgba(49, 87, 255, 0.2);
       }
 
       .danger-btn {
-        border-radius: 999px;
-        padding: 9px 12px;
-        background: #fff1f2;
+        background: #fff1ee;
         color: var(--danger);
-        font-weight: 800;
       }
 
       .message {
         min-height: 24px;
         margin-top: 12px;
         color: var(--muted);
-        font-size: 14px;
+        font-size: var(--text-control);
+        line-height: 1.5;
       }
 
       .message.is-error {
@@ -220,66 +255,38 @@
       }
 
       .workspace {
-        margin-top: 22px;
-      }
-
-      .todo-layout {
         display: grid;
-        grid-template-columns: 360px 1fr;
-        gap: 22px;
+        gap: 18px;
       }
 
       .stats {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 12px;
-        margin-bottom: 18px;
       }
 
       .stat {
         border: 1px solid var(--line);
-        border-radius: 20px;
-        padding: 16px;
+        border-radius: 8px;
+        padding: 14px;
         background: rgba(255, 255, 255, 0.72);
       }
 
       .stat strong {
         display: block;
         margin-bottom: 4px;
-        font-size: 26px;
+        font-size: var(--text-page-title);
       }
 
       .stat span {
         color: var(--muted);
-        font-size: 13px;
+        font-size: var(--text-caption);
       }
 
-      .filters {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 18px;
-      }
-
-      .filter-btn,
-      .status-btn {
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        padding: 9px 12px;
-        background: rgba(255, 255, 255, 0.74);
-        color: var(--muted);
-        font-weight: 750;
-      }
-
-      .filter-btn.is-active,
-      .status-btn.is-active {
-        border-color: rgba(49, 87, 255, 0.42);
-        background: rgba(49, 87, 255, 0.1);
-        color: var(--brand);
-      }
-
-      .list-panel {
-        padding: 22px;
+      .todo-layout {
+        display: grid;
+        grid-template-columns: 340px 1fr;
+        gap: 22px;
       }
 
       .list-head {
@@ -290,9 +297,11 @@
         margin-bottom: 16px;
       }
 
-      .list-head h3 {
-        margin: 0;
-        font-size: 22px;
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 18px;
       }
 
       .task-list {
@@ -305,17 +314,17 @@
 
       .task-card {
         border: 1px solid var(--line);
-        border-radius: 22px;
-        padding: 18px;
-        background: rgba(255, 255, 255, 0.82);
+        border-radius: 8px;
+        padding: 16px;
+        background: rgba(255, 255, 255, 0.84);
       }
 
       .task-card.is-completed {
-        background: rgba(240, 253, 244, 0.86);
+        background: rgba(239, 252, 244, 0.92);
       }
 
       .task-card.is-failed {
-        background: rgba(255, 241, 242, 0.9);
+        background: rgba(255, 244, 241, 0.94);
       }
 
       .task-main {
@@ -327,36 +336,37 @@
 
       .task-title {
         margin: 0;
-        font-size: 18px;
+        font-size: var(--text-card-title);
         line-height: 1.45;
       }
 
       .status-pill {
         flex: none;
+        align-self: flex-start;
         border-radius: 999px;
         padding: 7px 10px;
-        font-size: 12px;
+        font-size: var(--text-caption);
         font-weight: 900;
       }
 
       .status-not_started {
-        background: #eef2ff;
-        color: #3157ff;
+        background: #edf5ff;
+        color: #2461a7;
       }
 
       .status-in_progress {
-        background: #fffbeb;
-        color: #b45309;
+        background: #fff8e8;
+        color: var(--warn);
       }
 
       .status-completed {
-        background: #dcfce7;
-        color: #15803d;
+        background: #def8e9;
+        color: var(--ok);
       }
 
       .status-failed {
-        background: #ffe4e6;
-        color: #be123c;
+        background: #ffe7e1;
+        color: var(--danger);
       }
 
       .time-grid {
@@ -367,27 +377,28 @@
       }
 
       .time-grid div {
-        border-radius: 16px;
-        padding: 12px;
-        background: rgba(247, 249, 255, 0.86);
+        border-radius: 8px;
+        padding: 10px;
+        background: rgba(243, 247, 242, 0.86);
       }
 
       dt {
         margin-bottom: 5px;
         color: var(--muted);
-        font-size: 12px;
+        font-size: var(--text-caption);
       }
 
       dd {
         margin: 0;
-        font-size: 14px;
+        font-size: var(--text-control);
         font-weight: 780;
       }
 
       .countdown {
         margin: 0 0 14px;
         color: var(--muted);
-        font-size: 14px;
+        font-size: var(--text-control);
+        line-height: 1.5;
       }
 
       .actions {
@@ -397,20 +408,21 @@
       }
 
       .empty {
-        border: 1px dashed rgba(49, 87, 255, 0.25);
-        border-radius: 22px;
-        padding: 30px;
+        border: 1px dashed rgba(36, 107, 75, 0.25);
+        border-radius: 8px;
+        padding: 28px;
         text-align: center;
         color: var(--muted);
         background: rgba(255, 255, 255, 0.54);
+        font-size: var(--text-body);
       }
 
       [hidden] {
         display: none !important;
       }
 
-      @media (max-width: 880px) {
-        .hero,
+      @media (max-width: 920px) {
+        .shell,
         .todo-layout {
           grid-template-columns: 1fr;
         }
@@ -422,19 +434,26 @@
 
       @media (max-width: 560px) {
         .app {
-          width: min(100% - 20px, 1060px);
+          width: min(100% - 20px, 1120px);
           padding-top: 18px;
+        }
+
+        .topbar,
+        .list-head,
+        .task-main {
+          align-items: stretch;
+          flex-direction: column;
         }
 
         .intro,
         .auth-card,
         .composer,
         .list-panel {
-          padding: 20px;
-          border-radius: 22px;
+          padding: 18px;
         }
 
-        .time-grid {
+        .time-grid,
+        .stats {
           grid-template-columns: 1fr;
         }
       }
@@ -444,26 +463,35 @@
     <main class="app">
       <header class="topbar">
         <h1 class="site-title">qze的第一个网站</h1>
-        <div class="cloud-pill">☁️ D1 云端同步版</div>
+        <div class="userbar" id="userbar" hidden>
+          <span id="currentUser"></span>
+          <button class="secondary-btn" id="logoutBtn" type="button">退出登录</button>
+        </div>
       </header>
 
-      <section class="hero">
+      <section class="shell" id="authView">
         <div class="intro panel">
-          <div class="eyebrow">Cloudflare D1 Todo List</div>
+          <div class="eyebrow">账号任务本</div>
           <h2>每日任务</h2>
-          <p>
-            任务会保存到 Cloudflare D1 云数据库。换电脑后打开同一个网址，输入同一个云端口令，就能继续看到你的任务。
-          </p>
+          <p>登录后，你创建的任务会绑定到自己的账号。换一台电脑打开网站，再登录同一个账号，也能继续看到自己的任务和历史记录。</p>
         </div>
 
-        <section class="auth-card panel" id="authCard">
-          <h3>进入你的云端任务本</h3>
-          <p>请输入你在 Cloudflare 后台设置的 TODO_ACCESS_KEY。口令只保存在当前浏览器，不会显示在页面上。</p>
+        <section class="auth-card panel">
+          <div class="auth-tabs" aria-label="账号操作">
+            <button class="tab-btn is-active" type="button" data-auth-mode="login">登录</button>
+            <button class="tab-btn" type="button" data-auth-mode="register">注册</button>
+          </div>
+          <h3 id="authTitle">登录任务本</h3>
+          <p class="helper" id="authHelper">输入你的账号和密码，进入自己的每日任务。</p>
           <label class="field">
-            <span>云端口令</span>
-            <input id="accessKeyInput" type="password" autocomplete="current-password" placeholder="输入你的云端口令" />
+            <span>账号</span>
+            <input id="usernameInput" autocomplete="username" placeholder="3-24位字母、数字或下划线" />
           </label>
-          <button class="primary-btn" id="saveKeyBtn">进入任务本</button>
+          <label class="field">
+            <span>密码</span>
+            <input id="passwordInput" type="password" autocomplete="current-password" placeholder="至少6位" />
+          </label>
+          <button class="primary-btn" id="authSubmitBtn" type="button">登录</button>
           <div class="message" id="authMessage"></div>
         </section>
       </section>
@@ -479,10 +507,10 @@
         <div class="todo-layout">
           <form class="composer panel" id="taskForm">
             <h3>添加每日任务</h3>
-            <p class="helper">新增任务默认是“未开始”。到了结束时间还没完成，会自动变成“未完成”。</p>
+            <p class="helper">任务到达结束时间后，如果还没有标记为已完成，会自动变为未完成。</p>
             <label class="field">
               <span>任务内容</span>
-              <input id="taskTitleInput" maxlength="120" placeholder="例如：晚上 8 点前学习 30 分钟 HTML" required />
+              <input id="taskTitleInput" maxlength="120" placeholder="例如：晚上8点前学习30分钟HTML" required />
             </label>
             <label class="field">
               <span>结束时间</span>
@@ -494,19 +522,13 @@
 
           <section class="list-panel panel">
             <div class="list-head">
-              <h3>任务列表</h3>
-              <div class="actions">
-                <button class="secondary-btn" id="refreshBtn" type="button">刷新云端数据</button>
-                <button class="secondary-btn" id="logoutBtn" type="button">换口令</button>
-              </div>
+              <h3 id="listTitle">当前任务</h3>
+              <button class="secondary-btn" id="refreshBtn" type="button">刷新</button>
             </div>
 
             <div class="filters" id="filters">
-              <button class="filter-btn is-active" type="button" data-filter="all">全部</button>
-              <button class="filter-btn" type="button" data-filter="not_started">未开始</button>
-              <button class="filter-btn" type="button" data-filter="in_progress">进行中</button>
-              <button class="filter-btn" type="button" data-filter="completed">已完成</button>
-              <button class="filter-btn" type="button" data-filter="failed">未完成</button>
+              <button class="filter-btn is-active" type="button" data-view="current">当前任务</button>
+              <button class="filter-btn" type="button" data-view="history">历史任务</button>
             </div>
 
             <ul class="task-list" id="taskList"></ul>
@@ -517,7 +539,8 @@
     </main>
 
     <script>
-      const storageKey = "qzefirst-cloud-access-key";
+      const tokenStorageKey = "qzefirst-session-token";
+      const userStorageKey = "qzefirst-session-user";
       const statusLabels = {
         not_started: "未开始",
         in_progress: "进行中",
@@ -525,10 +548,16 @@
         failed: "未完成",
       };
 
-      const authCard = document.querySelector("#authCard");
+      const authView = document.querySelector("#authView");
       const todoApp = document.querySelector("#todoApp");
-      const accessKeyInput = document.querySelector("#accessKeyInput");
-      const saveKeyBtn = document.querySelector("#saveKeyBtn");
+      const userbar = document.querySelector("#userbar");
+      const currentUser = document.querySelector("#currentUser");
+      const authTabs = document.querySelector(".auth-tabs");
+      const authTitle = document.querySelector("#authTitle");
+      const authHelper = document.querySelector("#authHelper");
+      const usernameInput = document.querySelector("#usernameInput");
+      const passwordInput = document.querySelector("#passwordInput");
+      const authSubmitBtn = document.querySelector("#authSubmitBtn");
       const authMessage = document.querySelector("#authMessage");
       const taskForm = document.querySelector("#taskForm");
       const taskTitleInput = document.querySelector("#taskTitleInput");
@@ -539,10 +568,13 @@
       const refreshBtn = document.querySelector("#refreshBtn");
       const logoutBtn = document.querySelector("#logoutBtn");
       const filters = document.querySelector("#filters");
+      const listTitle = document.querySelector("#listTitle");
 
-      let accessKey = localStorage.getItem(storageKey) || "";
+      let token = localStorage.getItem(tokenStorageKey) || "";
+      let user = JSON.parse(localStorage.getItem(userStorageKey) || "null");
+      let authMode = "login";
       let tasks = [];
-      let activeFilter = "all";
+      let activeView = "current";
 
       function setMessage(element, text, type = "") {
         element.textContent = text;
@@ -567,15 +599,12 @@
 
       function formatDistance(deadlineAt, status) {
         if (status === "completed") return "任务已完成";
-
         const diff = new Date(deadlineAt).getTime() - Date.now();
         if (diff <= 0) return "已到结束时间，任务未完成";
-
         const totalMinutes = Math.ceil(diff / 60000);
         const days = Math.floor(totalMinutes / 1440);
         const hours = Math.floor((totalMinutes % 1440) / 60);
         const minutes = totalMinutes % 60;
-
         if (days > 0) return `距离结束还有 ${days} 天 ${hours} 小时`;
         if (hours > 0) return `距离结束还有 ${hours} 小时 ${minutes} 分钟`;
         return `距离结束还有 ${minutes} 分钟`;
@@ -585,7 +614,7 @@
         const response = await fetch(url, {
           ...options,
           headers: {
-            Authorization: `Bearer ${accessKey}`,
+            Authorization: token ? `Bearer ${token}` : "",
             "Content-Type": "application/json",
             ...(options.headers || {}),
           },
@@ -593,17 +622,46 @@
 
         const data = await response.json().catch(() => ({}));
         if (!response.ok) {
-          throw new Error(data.error || "请求失败，请稍后重试。");
+          throw new Error(data.error || "操作失败，请稍后再试。");
         }
         return data;
       }
 
+      async function authenticate() {
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value;
+        if (!username || !password) {
+          setMessage(authMessage, "请先填写账号和密码。", "error");
+          return;
+        }
+
+        try {
+          const data = await apiFetch(`/api/auth/${authMode}`, {
+            method: "POST",
+            body: JSON.stringify({ username, password }),
+          });
+          token = data.token;
+          user = data.user;
+          localStorage.setItem(tokenStorageKey, token);
+          localStorage.setItem(userStorageKey, JSON.stringify(user));
+          await enterApp();
+        } catch (error) {
+          setMessage(authMessage, error.message, "error");
+        }
+      }
+
+      async function enterApp() {
+        currentUser.textContent = user ? user.username : "";
+        authView.hidden = true;
+        todoApp.hidden = false;
+        userbar.hidden = false;
+        await loadTasks();
+      }
+
       async function loadTasks() {
-        setMessage(authMessage, "正在读取云端任务……");
         const data = await apiFetch("/api/tasks");
         tasks = data.tasks || [];
         renderTasks();
-        setMessage(authMessage, "云端任务读取成功。", "ok");
       }
 
       async function createTask(title, deadlineAt) {
@@ -658,15 +716,22 @@
         document.querySelector("#countFailed").textContent = counts.failed;
       }
 
+      function getVisibleTasks() {
+        if (activeView === "history") {
+          return [...tasks].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        }
+        return tasks
+          .filter((task) => task.status === "not_started" || task.status === "in_progress")
+          .sort((a, b) => new Date(a.deadlineAt) - new Date(b.deadlineAt));
+      }
+
       function renderTasks() {
         updateStats();
-
-        const visibleTasks = tasks
-          .filter((task) => activeFilter === "all" || task.status === activeFilter)
-          .sort((a, b) => new Date(a.deadlineAt) - new Date(b.deadlineAt));
-
+        listTitle.textContent = activeView === "history" ? "历史任务" : "当前任务";
+        const visibleTasks = getVisibleTasks();
         taskList.innerHTML = "";
         emptyState.hidden = visibleTasks.length > 0;
+        emptyState.textContent = activeView === "history" ? "暂时还没有历史任务。" : "现在还没有当前任务，先添加一个每日任务吧。";
 
         for (const task of visibleTasks) {
           const item = document.createElement("li");
@@ -678,7 +743,7 @@
             </div>
             <dl class="time-grid">
               <div>
-                <dt>开始时间</dt>
+                <dt>创建时间</dt>
                 <dd>${formatDate(task.createdAt)}</dd>
               </div>
               <div>
@@ -686,12 +751,12 @@
                 <dd>${formatDate(task.deadlineAt)}</dd>
               </div>
             </dl>
-            <p class="countdown">${formatDistance(task.deadlineAt, task.status)}</p>
-            <div class="actions">
+            <p class="countdown">${activeView === "history" ? `完成情况：${statusLabels[task.status]}` : formatDistance(task.deadlineAt, task.status)}</p>
+            <div class="actions" ${activeView === "history" ? "hidden" : ""}>
               <button class="status-btn ${task.status === "not_started" ? "is-active" : ""}" type="button" data-action="status" data-status="not_started">未开始</button>
               <button class="status-btn ${task.status === "in_progress" ? "is-active" : ""}" type="button" data-action="status" data-status="in_progress">进行中</button>
               <button class="status-btn ${task.status === "completed" ? "is-active" : ""}" type="button" data-action="status" data-status="completed">已完成</button>
-              <button class="secondary-btn" type="button" data-action="deadline" ${task.deadlineEdited ? "disabled" : ""}>${task.deadlineEdited ? "已修改过时间" : "修改结束时间"}</button>
+              <button class="secondary-btn" type="button" data-action="deadline" ${task.deadlineEdited ? "disabled" : ""}>${task.deadlineEdited ? "已改过时间" : "修改结束时间"}</button>
               <button class="danger-btn" type="button" data-action="delete">删除</button>
             </div>
           `;
@@ -699,37 +764,6 @@
           item.querySelector(".task-title").textContent = task.title;
           item.querySelectorAll("[data-action='status']").forEach((button) => {
             button.disabled = task.status === "failed" || button.dataset.status === task.status;
-          });
-          item.querySelector("[data-action='deadline']").disabled = task.deadlineEdited || task.status === "completed";
-          item.querySelector("[data-action='delete']").addEventListener("click", async () => {
-            if (!confirm("确定删除这个任务吗？")) return;
-            try {
-              await deleteTask(task.id);
-              setMessage(formMessage, "任务已删除。", "ok");
-            } catch (error) {
-              setMessage(formMessage, error.message, "error");
-            }
-          });
-          item.querySelector("[data-action='deadline']").addEventListener("click", async () => {
-            const current = toDateTimeLocalValue(task.deadlineAt).replace("T", " ");
-            const input = prompt("请输入新的结束时间，格式：2026-08-04 18:30", current);
-            if (!input) return;
-
-            const normalized = input.trim().replace(/\s+/, "T");
-            const nextDate = new Date(normalized);
-            if (Number.isNaN(nextDate.getTime())) {
-              setMessage(formMessage, "时间格式不正确，请用：2026-08-04 18:30", "error");
-              return;
-            }
-
-            try {
-              await patchTask(task.id, { deadlineAt: nextDate.toISOString() });
-              setMessage(formMessage, "结束时间已修改，这个任务的修改机会已经用掉。", "ok");
-            } catch (error) {
-              setMessage(formMessage, error.message, "error");
-            }
-          });
-          item.querySelectorAll("[data-action='status']").forEach((button) => {
             button.addEventListener("click", async () => {
               try {
                 await patchTask(task.id, { status: button.dataset.status });
@@ -739,6 +773,40 @@
               }
             });
           });
+
+          const deadlineButton = item.querySelector("[data-action='deadline']");
+          if (deadlineButton) {
+            deadlineButton.disabled = task.deadlineEdited || task.status === "completed";
+            deadlineButton.addEventListener("click", async () => {
+              const current = toDateTimeLocalValue(task.deadlineAt).replace("T", " ");
+              const input = prompt("请输入新的结束时间，格式：2026-08-10 18:30", current);
+              if (!input) return;
+              const nextDate = new Date(input.trim().replace(/\s+/, "T"));
+              if (Number.isNaN(nextDate.getTime())) {
+                setMessage(formMessage, "时间格式不正确，请使用：2026-08-10 18:30", "error");
+                return;
+              }
+              try {
+                await patchTask(task.id, { deadlineAt: nextDate.toISOString() });
+                setMessage(formMessage, "结束时间已修改。", "ok");
+              } catch (error) {
+                setMessage(formMessage, error.message, "error");
+              }
+            });
+          }
+
+          const deleteButton = item.querySelector("[data-action='delete']");
+          if (deleteButton) {
+            deleteButton.addEventListener("click", async () => {
+              if (!confirm("确定删除这个任务吗？")) return;
+              try {
+                await deleteTask(task.id);
+                setMessage(formMessage, "任务已删除。", "ok");
+              } catch (error) {
+                setMessage(formMessage, error.message, "error");
+              }
+            });
+          }
 
           taskList.appendChild(item);
         }
@@ -751,36 +819,33 @@
         deadlineInput.value = toDateTimeLocalValue(nextHour);
       }
 
-      saveKeyBtn.addEventListener("click", async () => {
-        const nextKey = accessKeyInput.value.trim();
-        if (!nextKey) {
-          setMessage(authMessage, "请先输入云端口令。", "error");
-          return;
-        }
+      authTabs.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-auth-mode]");
+        if (!button) return;
+        authMode = button.dataset.authMode;
+        authTabs.querySelectorAll(".tab-btn").forEach((item) => item.classList.remove("is-active"));
+        button.classList.add("is-active");
+        authTitle.textContent = authMode === "login" ? "登录任务本" : "注册新账号";
+        authHelper.textContent = authMode === "login" ? "输入你的账号和密码，进入自己的每日任务。" : "创建账号后，之后换电脑也能登录查看自己的任务。";
+        authSubmitBtn.textContent = authMode === "login" ? "登录" : "注册并登录";
+        passwordInput.autocomplete = authMode === "login" ? "current-password" : "new-password";
+        setMessage(authMessage, "");
+      });
 
-        try {
-          accessKey = nextKey;
-          await loadTasks();
-          localStorage.setItem(storageKey, accessKey);
-          authCard.hidden = true;
-          todoApp.hidden = false;
-        } catch (error) {
-          accessKey = "";
-          localStorage.removeItem(storageKey);
-          setMessage(authMessage, error.message, "error");
-        }
+      authSubmitBtn.addEventListener("click", authenticate);
+      passwordInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") authenticate();
       });
 
       taskForm.addEventListener("submit", async (event) => {
         event.preventDefault();
         const title = taskTitleInput.value.trim();
         const deadlineAt = new Date(deadlineInput.value).toISOString();
-
         try {
           await createTask(title, deadlineAt);
           taskTitleInput.value = "";
           setDefaultDeadline();
-          setMessage(formMessage, "任务已保存到云端。", "ok");
+          setMessage(formMessage, "任务已保存。", "ok");
         } catch (error) {
           setMessage(formMessage, error.message, "error");
         }
@@ -789,27 +854,32 @@
       refreshBtn.addEventListener("click", async () => {
         try {
           await loadTasks();
-          setMessage(formMessage, "已经刷新云端数据。", "ok");
+          setMessage(formMessage, "任务已刷新。", "ok");
         } catch (error) {
           setMessage(formMessage, error.message, "error");
         }
       });
 
-      logoutBtn.addEventListener("click", () => {
-        localStorage.removeItem(storageKey);
-        accessKey = "";
+      logoutBtn.addEventListener("click", async () => {
+        try {
+          await apiFetch("/api/auth/logout", { method: "POST" });
+        } catch {}
+        localStorage.removeItem(tokenStorageKey);
+        localStorage.removeItem(userStorageKey);
+        token = "";
+        user = null;
         tasks = [];
-        accessKeyInput.value = "";
         todoApp.hidden = true;
-        authCard.hidden = false;
-        setMessage(authMessage, "你可以输入新的云端口令。");
+        userbar.hidden = true;
+        authView.hidden = false;
+        passwordInput.value = "";
+        setMessage(authMessage, "已退出登录。");
       });
 
       filters.addEventListener("click", (event) => {
-        const button = event.target.closest("[data-filter]");
+        const button = event.target.closest("[data-view]");
         if (!button) return;
-
-        activeFilter = button.dataset.filter;
+        activeView = button.dataset.view;
         filters.querySelectorAll(".filter-btn").forEach((item) => item.classList.remove("is-active"));
         button.classList.add("is-active");
         renderTasks();
@@ -818,20 +888,17 @@
       setDefaultDeadline();
       setInterval(syncLocalExpiredTasks, 1000);
 
-      if (accessKey) {
-        accessKeyInput.value = accessKey;
-        loadTasks()
-          .then(() => {
-            authCard.hidden = true;
-            todoApp.hidden = false;
-          })
-          .catch((error) => {
-            localStorage.removeItem(storageKey);
-            accessKey = "";
-            setMessage(authMessage, error.message, "error");
-          });
+      if (token && user) {
+        enterApp().catch(() => {
+          localStorage.removeItem(tokenStorageKey);
+          localStorage.removeItem(userStorageKey);
+          token = "";
+          user = null;
+          authView.hidden = false;
+          todoApp.hidden = true;
+          userbar.hidden = true;
+        });
       }
     </script>
   </body>
 </html>
-
