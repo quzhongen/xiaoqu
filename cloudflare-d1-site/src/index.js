@@ -415,15 +415,15 @@ async function handleTasks(request, env) {
     }
 
     if (request.method === "POST") {
-      return createTask(request, env.DB, auth.user.id);
+      return await createTask(request, env.DB, auth.user.id);
     }
 
     if (request.method === "PATCH") {
-      return updateTask(request, env.DB, auth.user.id);
+      return await updateTask(request, env.DB, auth.user.id);
     }
 
     if (request.method === "DELETE") {
-      return deleteTask(request, env.DB, auth.user.id);
+      return await deleteTask(request, env.DB, auth.user.id);
     }
 
     return publicError("不支持这个操作。", 405);
@@ -435,19 +435,19 @@ async function handleTasks(request, env) {
 async function handleAuth(request, env, pathname) {
   try {
     if (request.method === "POST" && pathname === "/api/auth/register") {
-      return handleRegister(request, env);
+      return await handleRegister(request, env);
     }
 
     if (request.method === "POST" && pathname === "/api/auth/login") {
-      return handleLogin(request, env);
+      return await handleLogin(request, env);
     }
 
     if (request.method === "GET" && pathname === "/api/auth/me") {
-      return handleMe(request, env);
+      return await handleMe(request, env);
     }
 
     if (request.method === "POST" && pathname === "/api/auth/logout") {
-      return handleLogout(request, env);
+      return await handleLogout(request, env);
     }
 
     return publicError("不支持这个操作。", 405);
