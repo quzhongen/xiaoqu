@@ -3,7 +3,6 @@
   "name": "qzefirst-cloud",
   "main": "./src/index.js",
   "compatibility_date": "2026-08-05",
-  "compatibility_flags": ["nodejs_compat"],
   "keep_vars": true,
   "assets": {
     "directory": "./public",

@@ -1,5 +1,3 @@
-import { pbkdf2Sync } from "node:crypto";
-
 const STATUS_LIST = ["not_started", "in_progress", "completed", "failed"];
 const SESSION_DAYS = 30;
 const PASSWORD_ITERATIONS = 120000;
@@ -51,7 +49,18 @@ async function sha256(text) {
 }
 
 async function hashPassword(password, salt) {
-  return pbkdf2Sync(password, base64UrlToBytes(salt), PASSWORD_ITERATIONS, 32, "sha256").toString("base64url");
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveBits"]);
+  const hash = await crypto.subtle.deriveBits(
+    {
+      name: "PBKDF2",
+      hash: "SHA-256",
+      salt: base64UrlToBytes(salt),
+      iterations: PASSWORD_ITERATIONS,
+    },
+    key,
+    256
+  );
+  return bytesToBase64Url(new Uint8Array(hash));
 }
 
 function safeEqual(left, right) {
