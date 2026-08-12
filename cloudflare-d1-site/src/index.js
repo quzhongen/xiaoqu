@@ -1,6 +1,6 @@
 const STATUS_LIST = ["not_started", "in_progress", "completed", "failed"];
 const SESSION_DAYS = 30;
-const PASSWORD_ITERATIONS = 120000;
+const PASSWORD_ITERATIONS = 100000;
 
 function userError(message) {
   const error = new Error(message);
