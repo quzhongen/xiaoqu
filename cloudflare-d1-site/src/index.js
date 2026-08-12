@@ -25,6 +25,15 @@ function publicError(message = "操作失败，请稍后再试。", status = 400
   return json({ error: message }, status);
 }
 
+function logInternalError(scope, error) {
+  if (error?.publicMessage) return;
+  console.error(`${scope}_internal_error`, {
+    name: error?.name || "Error",
+    message: error?.message || String(error),
+    stack: error?.stack || "",
+  });
+}
+
 function bytesToBase64Url(bytes) {
   let binary = "";
   for (const byte of bytes) binary += String.fromCharCode(byte);
@@ -429,7 +438,8 @@ async function handleTasks(request, env) {
 
     return publicError("不支持这个操作。", 405);
   } catch (error) {
-    return publicError(publicMessage(error));
+    logInternalError("tasks", error);
+    return publicError(publicMessage(error), error?.publicMessage ? 400 : 500);
   }
 }
 
@@ -453,7 +463,8 @@ async function handleAuth(request, env, pathname) {
 
     return publicError("不支持这个操作。", 405);
   } catch (error) {
-    return publicError(publicMessage(error));
+    logInternalError("auth", error);
+    return publicError(publicMessage(error), error?.publicMessage ? 400 : 500);
   }
 }
 
