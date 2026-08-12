@@ -51,7 +51,7 @@ async function sha256(text) {
 }
 
 async function hashPassword(password, salt) {
-  return pbkdf2Sync(password, salt, PASSWORD_ITERATIONS, 32, "sha256").toString("base64url");
+  return pbkdf2Sync(password, base64UrlToBytes(salt), PASSWORD_ITERATIONS, 32, "sha256").toString("base64url");
 }
 
 function safeEqual(left, right) {
