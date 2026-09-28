@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "qze的第一个网站",
-  description: "qze 的第一个网站。",
+  title: "我的学习小站",
+  description: "把生活与知识折进自己的时间册。",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
   },
   openGraph: {
-    title: "qze的第一个网站",
-    description: "qze 的第一个网站。",
+    title: "我的学习小站",
+    description: "把生活与知识折进自己的时间册。",
     type: "website",
   },
 };
